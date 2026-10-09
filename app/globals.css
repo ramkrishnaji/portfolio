@@ -1,0 +1,128 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  background: #07070d;
+  color: #c7c7d9;
+  font-family: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* faint grid behind the whole page */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(to right, rgba(99, 102, 241, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(99, 102, 241, 0.045) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse at 50% 0%, #000 20%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at 50% 0%, #000 20%, transparent 75%);
+}
+
+::selection {
+  background: rgba(99, 102, 241, 0.45);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid #a5b4fc;
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* The one orchestrated moment: hero rises in, staggered */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.rise {
+  opacity: 0;
+  animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .rise {
+    opacity: 1;
+    animation: none;
+  }
+}
+
+.name-gradient {
+  background: linear-gradient(100deg, #818cf8 0%, #c4b5fd 38%, #f1f1fb 75%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.section-title {
+  font-family: "Syne", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #f4f4fb;
+  line-height: 1.05;
+}
+
+/* ---------- Motion ---------- */
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-16px) rotate(5deg); }
+}
+.float {
+  animation: float var(--dur, 7s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+.bob { animation: bob 6s ease-in-out infinite; }
+
+@keyframes cue {
+  0%, 100% { transform: translateY(0); opacity: 0.45; }
+  50% { transform: translateY(7px); opacity: 1; }
+}
+.cue { animation: cue 1.8s ease-in-out infinite; }
+
+@keyframes glow {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.1); }
+}
+.glow { animation: glow 9s ease-in-out infinite; }
+
+.reveal {
+  transition:
+    opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.reveal-hidden { opacity: 0; transform: translateY(28px); }
+.reveal-shown { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .float, .bob, .cue, .glow { animation: none; }
+  .reveal-hidden { opacity: 1; transform: none; }
+  .reveal { transition: none; }
+}
